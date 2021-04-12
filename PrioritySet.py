@@ -58,3 +58,6 @@ class PrioritySet(object):
             True daca containerul este gol, False altfel
         """ 
         return len(self.heap) == 0
+
+    def __len__(self):
+        return len(self.heap)

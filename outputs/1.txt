@@ -58,4 +58,5 @@ Solutie:
 
 
 ----------------
-56 iteratii in 0.14990544319152832 sec
+36 iteratii in 0.09793806076049805 sec
+numarul maxim de noduri din memorie: 74

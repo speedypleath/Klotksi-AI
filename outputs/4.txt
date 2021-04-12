@@ -9,7 +9,7 @@ Solutie:
 ######
 1: (cost 1)
 ##..##
-#.b.d#
+#b.d.#
 #c**e#
 #c**f#
 #.aaf#
@@ -58,4 +58,5 @@ Solutie:
 
 
 ----------------
-47 iteratii in 0.12392354011535645 sec
+117 iteratii in 0.29781508445739746 sec
+numarul maxim de noduri din memorie: 227

@@ -166,7 +166,7 @@ class Graph:
                 rez.append(nod_nou)
         return rez
 
-    def genereaza_succesori(self, nod_curent, tip_euristica="euristica banala"):
+    def genereaza_succesori(self, nod_curent, tip_euristica):
         """Functie care genereaza succesori
         Args:
             nod_curent: Nodul pentru care sunt generati succesorii
@@ -207,32 +207,48 @@ class Graph:
             return distance
         elif tip_euristica == "nivel":
             #euristica admisibila 
-            return self.level(nod)
+            return self.level(nod) - 2
         elif tip_euristica == "numar blocuri":
-            #euristica neadmisibila (ex poate exista un block cu 2 tileuri ce poate fi mutat dintr-o singura miscare)
+            #euristica admisibila
+            return self.level(nod) - 2 + self.blocks_no(nod) 
+        elif tip_euristica == "blocuri langa":
+            #euristica neadmisibila(input 5)
             value = nod.special_block()
             nr_blocuri = 0
-            a = float("inf")
-            b = 0
-            c = self.level(nod)
-            for i, j in self.iesire:
-                if nod.tiles[i][j] != '.':
-                    nr_blocuri += 1
-                a = min(j, a)
-                b = max(j, b)
-                
             for i, j in value:
-                a = min(j, a)
-                b = max(j, b)
-            
-            for i in range(1, c):
-                for j in range(a, b):
-                    if nod.tiles[i][j] not in ['.', '#']:
-                        nr_blocuri += 1
-
-            return c + nr_blocuri
+                if nod.tiles[i - 1][j] not in ['.', '#']:
+                    nr_blocuri += 1
+                if nod.tiles[i + 1][j] not in ['.', '#']:
+                    nr_blocuri += 1
+                if nod.tiles[i][j - 1] not in ['.', '#']:
+                    nr_blocuri += 1
+                if nod.tiles[i][j + 1] not in ['.', '#']:
+                    nr_blocuri += 1
+            return nr_blocuri
         else:
             raise Exception("Euristica invalida: " + tip_euristica)
+
+    def blocks_no(self, nod):
+        value = nod.special_block()
+        nr_blocuri = 0
+        a = float("inf")
+        b = 0
+        c = self.level(nod)
+        for i, j in self.iesire:
+            if nod.tiles[i][j] != '.':
+                nr_blocuri += 1
+            a = min(j, a)
+            b = max(j, b)
+            
+        for i, j in value:
+            a = min(j, a)
+            b = max(j, b)
+        
+        for i in range(1, c):
+            for j in range(a, b):
+                if nod.tiles[i][j] not in ['.', '#']:
+                    nr_blocuri += 1
+        return nr_blocuri
 
     def level(self, nod):
         """Functie care determina nivelul blocului special fata de iesire
