@@ -1,0 +1,9 @@
+Starea initiala e stare finala 
+0: (cost 0)
+##.d##
+#....#
+#c.bb#
+#cebb#
+#.aaf#
+#gaah#
+######
